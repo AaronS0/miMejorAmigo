@@ -1,7 +1,7 @@
 import { doc, getDoc, updateDoc } from "firebase/firestore"; // Añadimos getDoc
 import React, { useEffect, useState } from 'react'; // Añadimos useEffect
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { db } from '../../firebaseConfig';
+import { db } from '../firebaseConfig';
 
 export default function App() {
 
