@@ -7,8 +7,8 @@ import {
   TextInput,
   ScrollView,
   Alert,
-  Picker,
 } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { FontAwesome5 } from '@expo/vector-icons';
 

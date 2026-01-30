@@ -12,7 +12,7 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import { auth } from '../firebaseConfig';
+import { auth } from '../../firebaseConfig';
 
 const { width } = Dimensions.get('window');
 
@@ -142,7 +142,7 @@ export default function DrawerMenu({ visible, onClose }: DrawerMenuProps) {
 
         {/* Footer */}
         <View style={styles.drawerFooter}>
-          <Text style={styles.versionText}>miMejorAmigo v1.0.1</Text>
+          <Text style={styles.versionText}>miMejorAmigo v1.1.0</Text>
         </View>
       </View>
     </>
