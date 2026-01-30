@@ -1,6 +1,5 @@
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useNavigation, useRouter } from 'expo-router';
-import { signOut } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import {
@@ -10,9 +9,8 @@ import {
   Text,
   TouchableOpacity,
   View,
-  ImageBackground,
 } from 'react-native';
-import { auth, db } from '../firebaseConfig';
+import { auth, db } from '../../firebaseConfig';
 
 const SERVICIOS = [
   { id: 'paseo', nombre: 'Paseo', icon: 'paw', color: '#FF6B6B' },
@@ -283,104 +281,4 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 13,
   },
-});
-    <View style={styles.center}><ActivityIndicator size="large" color="#D9A05B" /></View>
-  );
-
-  return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.welcome}>¡Hola, {userData?.nombreUsuario || 'Amigo'}! 👋</Text>
-        <TouchableOpacity onPress={() => signOut(auth).then(() => router.replace('/'))}>
-          <FontAwesome5 name="sign-out-alt" size={20} color="#666" />
-        </TouchableOpacity>
-      </View>
-
-      {(!userData?.tieneMascota) ? (
-        <View style={styles.emptyCard}>
-          <FontAwesome5 name="paw" size={40} color="#D9A05B" style={{marginBottom: 15}} />
-          <Text style={styles.infoText}>Parece que aún no tienes amigos registrados.</Text>
-          <TouchableOpacity 
-            style={styles.mainButton}
-            onPress={() => router.push('/registro-mascota')}
-          >
-            <Text style={styles.buttonText}>Registrar Mascota 🐶</Text>
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <>
-          {/* TARJETA DE BILLETERA (Wallet Card) */}
-          <View style={styles.walletCard}>
-            <View style={styles.walletTop}>
-              <Text style={styles.walletLabel}>Saldo de Galletas</Text>
-              <FontAwesome5 name="cookie-bite" size={24} color="#FFF" />
-            </View>
-            <Text style={styles.balanceText}>{userData?.galletas || 0}</Text>
-            <Text style={styles.currencyText}>Galletas disponibles</Text>
-          </View>
-
-          {/* BOTÓN MIS MASCOTAS */}
-          <TouchableOpacity 
-            style={styles.misMascotasBtn}
-            onPress={() => router.push('/mis-mascotas')}
-          >
-            <FontAwesome5 name="paw" size={18} color="#FFF" />
-            <Text style={styles.misMascotasText}>Mis Mascotas</Text>
-            <FontAwesome5 name="chevron-right" size={16} color="#FFF" />
-          </TouchableOpacity>
-
-          {/* GRID DE SERVICIOS */}
-          <Text style={styles.servicesTitle}>Servicios Disponibles</Text>
-          <View style={styles.servicesGrid}>
-            {SERVICIOS.map((servicio) => (
-              <TouchableOpacity
-                key={servicio.id}
-                style={[styles.serviceCard, { borderLeftColor: servicio.color }]}
-                onPress={() => {
-                  // TODO: Navegar a la pantalla de reserva del servicio
-                  console.log(`Abriendo ${servicio.nombre}`);
-                }}
-              >
-                <View style={[styles.serviceIcon, { backgroundColor: servicio.color + '20' }]}>
-                  <FontAwesome5 name={servicio.icon} size={24} color={servicio.color} />
-                </View>
-                <Text style={styles.serviceName}>{servicio.nombre}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </>
-      )}
-    </ScrollView>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: { padding: 25, backgroundColor: '#F8F9FA', flexGrow: 1 },
-  center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 40, marginBottom: 30 },
-  welcome: { fontSize: 22, fontWeight: 'bold', color: '#1A1A1A' },
-  
-  // Estilos Wallet
-  walletCard: { backgroundColor: '#D9A05B', borderRadius: 25, padding: 25, width: '100%', elevation: 10, shadowColor: '#D9A05B', shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.3, shadowRadius: 20, marginBottom: 20 },
-  walletTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
-  walletLabel: { color: 'rgba(255,255,255,0.8)', fontSize: 14, fontWeight: '600' },
-  balanceText: { color: '#FFF', fontSize: 42, fontWeight: 'bold' },
-  currencyText: { color: 'rgba(255,255,255,0.6)', fontSize: 12, fontWeight: '700', marginTop: 5 },
-
-  // Botón Mis Mascotas
-  misMascotasBtn: { flexDirection: 'row', backgroundColor: '#FFF', borderRadius: 16, padding: 16, marginBottom: 25, alignItems: 'center', elevation: 2, borderLeftWidth: 4, borderLeftColor: '#D9A05B' },
-  misMascotasText: { flex: 1, marginLeft: 12, fontSize: 16, fontWeight: '600', color: '#333' },
-
-  // Grid de Servicios
-  servicesTitle: { fontSize: 18, fontWeight: '700', color: '#222', marginBottom: 15 },
-  servicesGrid: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', gap: 12 },
-  serviceCard: { width: '48%', backgroundColor: '#FFF', borderRadius: 16, padding: 16, alignItems: 'center', elevation: 2, marginBottom: 12, borderLeftWidth: 4 },
-  serviceIcon: { width: 60, height: 60, borderRadius: 12, justifyContent: 'center', alignItems: 'center', marginBottom: 10 },
-  serviceName: { fontSize: 14, fontWeight: '600', color: '#333', textAlign: 'center' },
-
-  // Estilos Empty
-  emptyCard: { backgroundColor: '#FFF', borderRadius: 25, padding: 40, alignItems: 'center', borderStyle: 'dashed', borderWidth: 2, borderColor: '#D9A05B' },
-  infoText: { textAlign: 'center', color: '#666', marginBottom: 20 },
-  mainButton: { backgroundColor: '#D9A05B', paddingVertical: 15, paddingHorizontal: 30, borderRadius: 15 },
-  buttonText: { color: '#FFF', fontWeight: 'bold' }
 });

@@ -2,7 +2,7 @@
   "expo": {
     "name": "Mi mejor amigo",
     "slug": "mi-mejor-amigo",
-    "version": "1.0.2",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/splash.png",
     "scheme": "mimejoramigo",
@@ -28,18 +28,19 @@
       "output": "static",
       "favicon": "./assets/images/splash.png"
     },
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#D9A05B"
+    },
     "plugins": [
+      "expo-router",
       [
         "expo-splash-screen",
         {
           "image": "./assets/images/splash.png",
           "resizeMode": "cover",
-          "backgroundColor": "#D9A05B",
-          "dark": {
-            "image": "./assets/images/splash.png",
-            "resizeMode": "cover",
-            "backgroundColor": "#D9A05B"
-          }
+          "backgroundColor": "#D9A05B"
         }
       ]
     ],
