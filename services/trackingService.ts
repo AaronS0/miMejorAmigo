@@ -1,16 +1,15 @@
-import {
-  doc,
-  getDoc,
-  collection,
-  query,
-  where,
-  getDocs,
-  onSnapshot,
-  UpdateData,
-  updateDoc,
-} from 'firebase/firestore';
-import { db, auth } from '../firebaseConfig';
 import * as Location from 'expo-location';
+import {
+    collection,
+    doc,
+    getDoc,
+    getDocs,
+    onSnapshot,
+    query,
+    updateDoc,
+    where
+} from 'firebase/firestore';
+import { db } from '../firebaseConfig';
 
 export interface ServicioActivo {
   id: string;

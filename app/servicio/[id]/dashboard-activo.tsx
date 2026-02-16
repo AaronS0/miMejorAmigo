@@ -1,27 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  ActivityIndicator,
-  Image,
-  Alert,
-  Linking,
-  FlatList,
-} from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { useTheme } from '../../contexts/ThemeContext';
+import React, { useEffect, useState } from 'react';
 import {
-  obtenerServicioActivo,
-  subscribeToServicioActivo,
-  subscribeToFotosServicio,
-  ServicioActivo,
-  FotoServicio,
-  calcularDistancia,
-} from '../../services/trackingService';
+    ActivityIndicator,
+    Alert,
+    FlatList,
+    Image,
+    Linking,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from 'react-native';
+import { useTheme } from '../../contexts/ThemeContext';
 import { auth } from '../../firebaseConfig';
+import {
+    FotoServicio,
+    ServicioActivo,
+    calcularDistancia,
+    subscribeToFotosServicio,
+    subscribeToServicioActivo
+} from '../../services/trackingService';
 
 interface DashboardServicioActivoProps {
   onClose?: () => void;
