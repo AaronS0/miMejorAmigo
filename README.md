@@ -2,32 +2,40 @@
 
 ## 📱 Descripción
 
-**miMejorAmigo** es una aplicación móvil de servicios para mascotas que conecta propietarios con prestadores profesionales. Permite agendar servicios como paseos, guardería, baño, adiestramiento y más.
+**miMejorAmigo** es una aplicación móvil que implementa el **Modelo "Uber" para servicios de mascotas**. Conecta propietarios con prestadores profesionales mediante búsqueda inteligente, tracking en tiempo real y garantía de pago.
 
-### Versión: 1.1.0
-**Estado:** En desarrollo (82% completado)  
-**Última actualización:** 30 de enero de 2026
+### Versión: 1.2.0 🚀
+**Estado:** Modelo Uber completamente implementado (100%)  
+**Última actualización:** 15 de febrero de 2026
 
 ---
 
-## ✨ Características Principales
+## ✨ Características Principales v1.2.0
 
-### Para Usuarios (Dueños de mascotas)
-- ✅ Registro con datos detallados de mascotas
-- ✅ Seleccionar y agendar servicios
-- ✅ Ver prestadores disponibles en su zona
-- ✅ Sistema interno de moneda ("galletas")
-- ✅ Historial de servicios
-- ✅ Calificar prestadores
-- 🔄 Solicitar extras durante servicio (fotos, videos, videollamadas)
+### Para Clientes
+- ✅ **Búsqueda Automática** - Sistema inteligente busca prestadores automáticamente
+- ✅ **Asignación Instantánea** - Se asigna el mejor calificado si está disponible
+- ✅ **Reservas Huérfanas** - Si nadie disponible, queda abierta para prestadores
+- ✅ **Tracking GPS en Vivo** - Ubicación real del prestador durante servicio
+- ✅ **Feed de Fotos** - Prestador sube fotos en tiempo real del servicio
+- ✅ **Garantía de Pago** - Sistema de depósito bloquea fondos automáticamente
+- ✅ **Dashboard Activo** - Control total durante el servicio
+- ✅ **Botón Emergencia** - Contacto inmediato si hay problema
 
-### Para Prestadores
-- ✅ Registro con especialidades y certificaciones
-- ✅ Definir horarios y zona de cobertura
-- ✅ Recibir solicitudes de servicios
-- ✅ Gestionar disponibilidad
-- ✅ Retirar ganancias en galletas
-- 🔄 Enviar fotos/videos de servicios
+### Para Prestadores  
+- ✅ **Tablero de Misiones** - Encuentra trabajos disponibles cerca de ti
+- ✅ **Aceptación Fácil** - Un toque para aceptar una misión
+- ✅ **Distancia Automática** - Calculo de km en tiempo real (Haversine)
+- ✅ **Información Completa** - Detalles del cliente y mascota
+- ✅ **Filtros Inteligentes** - Por tipo de servicio y otros criterios
+- ✅ **Garantía de Cobro** - Depósito bloqueado = garantizado pago
+- ✅ **Calificaciones Visibles** - Solo aceptas en clientes bien calificados
+
+### Sistema de Garantía de Pago
+- 💰 **Automático** - Bloquea fondos al crear reserva
+- 📊 **Saldo Disponible vs Reservado** - Control transparente
+- 🔄 **Estados** - reservado → en_transito → completado → devuelto
+- 📝 **Auditoría Completa** - Cada transacción registrada
 
 ---
 
@@ -35,49 +43,171 @@
 
 ### Frontend
 - **React Native** 0.81.5
-- **Expo** 54.0.32
-- **Expo Router** 6.0.22 (file-based routing)
-- **React Navigation** 7.1.8 (bottom tabs + drawer)
+- **Expo** 54.0.32 + Expo Router 6.0.22
+- **Expo Location** 17.0.1 (GPS tracking)
 - **TypeScript**
-- **React Native Calendars** (selector de fechas)
+- **FontAwesome5 Icons**
+- **Theme Context** (Dark/Light mode)
 
 ### Backend
 - **Firebase Authentication** (email/password)
-- **Firestore** (base de datos en tiempo real)
-- **Firebase Storage** (almacenamiento de fotos/videos)
+- **Firestore** (base de datos - listeners en tiempo real)
+- **Firebase Storage** (fotos/videos)
+- **Cloud Functions** (ready para push notifications)
 
-### Diseño
-- **FontAwesome5 Icons**
-- **React Native StyleSheet**
-- **Diseño responsivo**
+### Algoritmos
+- **Haversine Formula** - Cálculo de distancia GPS
+- **Inteligencia de Búsqueda** - Filtrado por 6 criterios
+- **Real-time Listeners** - onSnapshot para actualizaciones live
 
 ---
 
-## 📊 Progreso del Proyecto
+## 📊 Versión 1.2.0 - Roadmap
+
+### ✅ FASE 1: Estabilización (v1.1.0)
+- Emergency fixes y correcciones criticas
+- Validaciones mejoradas
+
+### ✅ FASE 2: Modelo Uber
+**FASE 2.1 - Solicitudes Huérfanas**
+- Búsqueda inteligente de prestadores
+- Estados: confirmada vs buscando
+- Filtrado por: proximidad, disponibilidad, especialidad, calificación, tamaño, ubicación
+
+**FASE 2.2 - Tablero de Misiones**
+- [app/prestador/tablero-misiones.tsx](app/prestador/tablero-misiones.tsx) - Dashboard para prestadores
+- Aceptación con un toque
+- Distancia automática
+- Pull-to-refresh
+
+**FASE 2.3 - Sistema Depósito Garantía**
+- [services/depositoService.ts](services/depositoService.ts) - Bloqueo automático de fondos
+- Auditoría completa
+- Saldo detallado
+
+### ✅ FASE 3: Dashboard Dinámico + Tracking
+- [services/trackingService.ts](services/trackingService.ts) - GPS en tiempo real
+- [app/servicio/[id]/dashboard-activo.tsx](app/servicio/[id]/dashboard-activo.tsx) - Interfaz activa
+- Feed de fotos en vivo
+- Timeline del servicio
+
+### 📍 FASE 4: Push Notifications (próxima)
+- Firebase Cloud Messaging setup
+- Notificaciones de estado
+- Alertas de proximidad
+- Emergencia alerts
+
+---
+
+## 📁 Estructura de Archivos Nuevos (v1.2.0)
+
+### Servicios
+```
+services/
+├─ reservaService.ts (301 líneas)  ← Búsqueda inteligente
+├─ misionesService.ts (250 líneas) ← Misiones para prestadores  
+├─ depositoService.ts (220 líneas) ← Garantía de pago
+└─ trackingService.ts (340 líneas) ← Tracking GPS + fotos
+```
+
+### Componentes
+```
+app/
+├─ prestador/
+│  └─ tablero-misiones.tsx (450 líneas)      ← Dashboard prestadores
+└─ servicio/[id]/
+   └─ dashboard-activo.tsx (520 líneas)      ← Dashboard activo clientes
+```
+
+### Integraciones
+```
+app/(tabs)/
+├─ home.tsx (MODIFICADO)            ← Detección servicio activo
+└─ perfil.tsx (CORREGIDO)           ← Fix de cadena sin terminar
+
+app/components/
+└─ drawer-menu.tsx (MODIFICADO)     ← "Tablero de Misiones" para prestadores
+
+app/servicio/[id]/
+└─ confirmacion.tsx (MODIFICADO)    ← Nuevo flujo de búsqueda
+```
+
+---
+
+## 🔄 Flujo de Reserva Completo (Uber Model)
 
 ```
-IMPLEMENTADO:
-├─ 19 pantallas de 23 (82%)
-├─ Autenticación (login/signup)
-├─ Registro de usuario (3 pasos)
-├─ Registro de prestador (3 pasos)
-├─ Sistema de navegación (tabs + drawer)
-├─ Saldo de galletas
-├─ Flujo completo de reserva ⭐
-│  ├─ Seleccionar mascota
-│  ├─ Calendario con validación
-│  ├─ Selector de hora
-│  ├─ Lista prestadores (filtrada por ubicación)
-│  ├─ Perfil prestador
-│  └─ Confirmación y pago
-└─ Documentación completa
-
-PRÓXIMO:
-├─ Sistema de alertas (30/10/5 min antes)
-├─ Extras pagables (fotos, videos, llamadas)
-├─ Historial y reseñas
-└─ Publicación en Google Play / App Store
+1. CLIENTE SELECCIONA SERVICIO
+   ↓
+2. SISTEMA BUSCA PRESTADORES
+   ├─ Por proximidad (Haversine)
+   ├─ Por disponibilidad
+   ├─ Por especialidad
+   ├─ Por calificación (>= 4.0)
+   └─ Por tamaño mascota
+   ↓
+3. SI HAY DISPONIBLES: ASIGNA AL MEJOR
+   ├─ Estado: confirmada
+   ├─ Bloquea depósito (fondos)
+   └─ Cliente ve prestador confirmado
+   ↓
+   SI NO HAY: QUEDA ABIERTA
+   ├─ Estado: buscando
+   ├─ Bloquea depósito
+   └─ Aparece en "Tablero de Misiones"
+      ↓
+4. PRESTADOR ACEPTA MISIÓN
+   ├─ Presiona "Aceptar"
+   ├─ Estado cambia: buscando → confirmada
+   └─ Se asigna automáticamente
+   ↓
+5. SERVICIO INICIA
+   ├─ Estado: en_progreso
+   ├─ Cliente ve Dashboard en vivo
+   ├─ Ubicación del prestador
+   └─ Prestador sube fotos
+   ↓
+6. SERVICIO FINALIZA
+   ├─ Estado: completada
+   ├─ Depósito se libera
+   ├─ Cliente puede calificar
+   └─ Transacción registrada en auditoría
 ```
+
+---
+
+## 📊 Estadísticas v1.2.0
+
+| Métrica | Valor |
+|---------|-------|
+| Archivos nuevos | 8 |
+| Archivos modificados | 5 |
+| Líneas de código | ~1,800+ |
+| Servicios Firebase | 4 |
+| Real-time listeners | 3 |
+| Estados manejados | 9+ |
+| Depositos creados | 4 servicios |
+
+---
+
+## 🚀 Características Nuevas
+
+### Sistema de Búsqueda (6 criterios)
+1. **Proximidad** - Radio en km desde ubicación cliente
+2. **Disponibilidad** - Horarios y días disponibles
+3. **Especialidad** - Paseo, guardería, baño, etc.
+4. **Calificación** - Mínimo 4.0 estrellas
+5. **Tamaño Mascota** - Filtrado por peso/tamaño
+6. **Ubicación GPS** - Haversine formula
+
+### Estados de Réserva
+- `buscando` - Misión abierta, esperando prestador
+- `confirmada` - Prestador asignado
+- `en_progreso` - Servicio activo ahora
+- `completada` - Finalizado
+- `cancelada` - Cancelado por cliente
+
+### Estados de Depósito
 
 ---
 

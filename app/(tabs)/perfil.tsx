@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   },
   rol: {
     fontSize: 13,
-    fontWeight: '500,
+    fontWeight: '500',
   },
   section: {
     borderRadius: 12,

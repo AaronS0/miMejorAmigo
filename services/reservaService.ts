@@ -88,6 +88,8 @@ export async function buscarPrestadoresDisponibles(
       const prestador = docSnap.data();
       const prestadorId = docSnap.id;
 
+      let distanciaMetros = 0;
+
       // Validar ubicación si existe
       if (prestador.latitud && prestador.longitud) {
         const distancia = calcularDistancia(
@@ -97,8 +99,9 @@ export async function buscarPrestadoresDisponibles(
           prestador.longitud
         );
 
+        distanciaMetros = distancia / 1000; // Convertir a km
         const radioAccion = parseFloat(prestador.radioAccion) || 15; // Default 15 km
-        if (distancia > radioAccion) return;
+        if (distanciaMetros > radioAccion) return;
       }
 
       // Validar disponibilidad según estado
@@ -118,7 +121,7 @@ export async function buscarPrestadoresDisponibles(
         nombre: prestador.nombre,
         latitud: prestador.latitud,
         longitud: prestador.longitud,
-        radio: radioAccion,
+        radio: distanciaMetros,
         disponible: true,
         serviciosCompletados: prestador.serviciosCompletados || 0,
         puntuacionPromedio: puntuacion,
@@ -225,6 +228,7 @@ export async function crearReservaConBusqueda(
     const reservaId = reservaDoc.id;
 
     // Crear depósito de garantía (bloquea las galletas)
+    const { crearDepositoGarantia } = await import('./depositoService');
     const depositoResult = await crearDepositoGarantia(
       userId,
       reservaId,

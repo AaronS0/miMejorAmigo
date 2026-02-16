@@ -12,15 +12,15 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
-import { useTheme } from '../../contexts/ThemeContext';
-import { auth } from '../../firebaseConfig';
+import { useTheme } from '../../../contexts/ThemeContext';
+import { auth } from '../../../firebaseConfig';
 import {
     FotoServicio,
     ServicioActivo,
     calcularDistancia,
     subscribeToFotosServicio,
     subscribeToServicioActivo
-} from '../../services/trackingService';
+} from '../../../services/trackingService';
 
 interface DashboardServicioActivoProps {
   onClose?: () => void;
@@ -38,7 +38,7 @@ export default function DashboardServicioActivo({ onClose }: DashboardServicioAc
     if (!userId) return;
 
     // Subscribe a cambios en el servicio activo
-    const unsubscribe = subscribeToServicioActivo(userId, (servicioActivo) => {
+    const unsubscribe = subscribeToServicioActivo(userId, (servicioActivo: ServicioActivo | null) => {
       setServicio(servicioActivo);
       setLoading(false);
 

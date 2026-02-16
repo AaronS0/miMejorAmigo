@@ -64,19 +64,19 @@ export async function obtenerServicioActivo(userId: string): Promise<ServicioAct
     const querySnapshot = await getDocs(q);
     if (querySnapshot.empty) return null;
 
-    const doc = querySnapshot.docs[0];
-    const reserva = doc.data();
+    const docSnapshot = querySnapshot.docs[0];
+    const reserva = docSnapshot.data() as any;
 
     // Obtener datos del prestador
     const prestadorDoc = await getDoc(doc(db, 'usuarios', reserva.idPrestador));
-    const prestadorData = prestadorDoc.data();
+    const prestadorData = prestadorDoc.data() as any;
 
     // Obtener datos de la mascota
     const mascotaDoc = await getDoc(doc(db, 'mascotas', reserva.idMascota));
-    const mascotaData = mascotaDoc.data();
+    const mascotaData = mascotaDoc.data() as any;
 
     return {
-      id: doc.id,
+      id: docSnapshot.id,
       idUsuario: reserva.idUsuario,
       idPrestador: reserva.idPrestador,
       idMascota: reserva.idMascota,
@@ -119,18 +119,18 @@ export function subscribeToServicioActivo(
         return;
       }
 
-      const doc = querySnapshot.docs[0];
-      const reserva = doc.data();
+      const docSnapshot = querySnapshot.docs[0];
+      const reserva = docSnapshot.data();
 
       // Obtener datos actualizados del prestador y mascota
       const prestadorDoc = await getDoc(doc(db, 'usuarios', reserva.idPrestador));
-      const prestadorData = prestadorDoc.data();
+      const prestadorData = prestadorDoc.data() as any;
 
       const mascotaDoc = await getDoc(doc(db, 'mascotas', reserva.idMascota));
-      const mascotaData = mascotaDoc.data();
+      const mascotaData = mascotaDoc.data() as any;
 
       callback({
-        id: doc.id,
+        id: docSnapshot.id,
         idUsuario: reserva.idUsuario,
         idPrestador: reserva.idPrestador,
         idMascota: reserva.idMascota,
@@ -335,18 +335,18 @@ export async function obtenerServiciosActivosPrestador(
     const querySnapshot = await getDocs(q);
     const servicios: ServicioActivo[] = [];
 
-    for (const doc of querySnapshot.docs) {
-      const reserva = doc.data();
+    for (const docSnapshot of querySnapshot.docs) {
+      const reserva = docSnapshot.data() as any;
 
       // Obtener datos de mascota y cliente
       const mascotaDoc = await getDoc(doc(db, 'mascotas', reserva.idMascota));
-      const mascotaData = mascotaDoc.data();
+      const mascotaData = mascotaDoc.data() as any;
 
       const clienteDoc = await getDoc(doc(db, 'usuarios', reserva.idUsuario));
-      const clienteData = clienteDoc.data();
+      const clienteData = clienteDoc.data() as any;
 
       servicios.push({
-        id: doc.id,
+        id: docSnapshot.id,
         idUsuario: reserva.idUsuario,
         idPrestador: reserva.idPrestador,
         idMascota: reserva.idMascota,
