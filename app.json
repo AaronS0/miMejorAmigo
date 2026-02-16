@@ -1,0 +1,63 @@
+{
+  "expo": {
+    "name": "Mi mejor amigo",
+    "slug": "mi-mejor-amigo",
+    "version": "1.2.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/splash.png",
+    "scheme": "mimejoramigo",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "permissions": ["expo-location"],
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Esta app necesita acceso a tu ubicación para rastrear al prestador del servicio."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#D9A05B",
+        "foregroundImage": "./assets/images/splash.png"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.anonymous.mimejoramigo",
+      "splash": {
+        "image": "./assets/images/splash.png",
+        "resizeMode": "cover",
+        "backgroundColor": "#D9A05B"
+      },
+      "permissions": ["android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION"]
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/splash.png"
+    },
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#D9A05B"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash.png",
+          "resizeMode": "cover",
+          "backgroundColor": "#D9A05B"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "22b3f397-9187-40fa-9733-85d2edfa5dff"
+      }
+    },
+    "owner": "aarons0"
+  }
+}
