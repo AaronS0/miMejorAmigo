@@ -1,0 +1,28 @@
+{
+  "name": "mimejoramigo",
+  "version": "1.0.0",
+  "description": "Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AaronS0/miMejorAmigo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/AaronS0/miMejorAmigo/issues"
+  },
+  "homepage": "https://github.com/AaronS0/miMejorAmigo#readme",
+  "dependencies": {
+    "expo": "^54.0.32",
+    "firebase": "^12.8.0",
+    "react-dom": "19.1.0",
+    "react-native": "^0.83.1",
+    "react-native-web": "^0.21.0"
+  }
+}

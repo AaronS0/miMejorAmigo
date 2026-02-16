@@ -1,0 +1,344 @@
+import { FontAwesome5 } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import React, { useState } from 'react';
+import {
+    Alert,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+} from 'react-native';
+
+export default function RegistroUsuarioPaso1() {
+  const router = useRouter();
+  const [nombre, setNombre] = useState('');
+  const [email, setEmail] = useState('');
+  const [telefonoContacto, setTelefonoContacto] = useState('');
+  const [direccion, setDireccion] = useState('');
+  const [ciudad, setCiudad] = useState('');
+  const [provincia, setProvincia] = useState('');
+  const [codigoPostal, setCodigoPostal] = useState('');
+  const [acceptTerms, setAcceptTerms] = useState(false);
+
+  const handleContinuar = () => {
+    if (!nombre || !email || !telefonoContacto || !direccion || !ciudad) {
+      Alert.alert('Campos Obligatorios', 'Por favor completa todos los campos marcados con *');
+      return;
+    }
+
+    if (!acceptTerms) {
+      Alert.alert('Aceptar Términos', 'Debes aceptar los Términos y Condiciones para continuar');
+      return;
+    }
+
+    // Guardar en AsyncStorage o estado global para pasos siguientes
+    const userData = {
+      nombre,
+      email,
+      telefonoContacto,
+      direccion,
+      ciudad,
+      provincia,
+      codigoPostal,
+    };
+
+    // TODO: Guardar en AsyncStorage
+    // Para ahora, pasamos al siguiente paso
+    router.push({
+      pathname: '/registro/usuario/paso-2',
+      params: { userData: JSON.stringify(userData) },
+    });
+  };
+
+  return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}
+    >
+      <ScrollView
+        style={styles.container}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: Platform.OS === 'android' ? 100 : 0 }}
+      >
+        {/* Header */}
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => router.back()}>
+            <FontAwesome5 name="arrow-left" size={20} color="#2C3E50" />
+          </TouchableOpacity>
+          <Text style={styles.title}>Datos Básicos</Text>
+          <View style={{ width: 20 }} />
+        </View>
+
+        <View style={styles.progressContainer}>
+          <View style={[styles.progressBar, { width: '33%' }]} />
+        </View>
+        <Text style={styles.stepText}>Paso 1 de 3</Text>
+
+        {/* Form */}
+        <View style={styles.form}>
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Nombre Completo *</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Tu nombre"
+              value={nombre}
+              onChangeText={setNombre}
+              placeholderTextColor="#BDC3C7"
+            />
+          </View>
+
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Email *</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="tu@email.com"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              placeholderTextColor="#BDC3C7"
+            />
+          </View>
+
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Teléfono de Contacto *</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="+56912345678"
+              value={telefonoContacto}
+              onChangeText={setTelefonoContacto}
+              keyboardType="phone-pad"
+              placeholderTextColor="#BDC3C7"
+            />
+          </View>
+
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Dirección *</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Tu dirección"
+              value={direccion}
+              onChangeText={setDireccion}
+              placeholderTextColor="#BDC3C7"
+            />
+          </View>
+
+          <View style={styles.rowInputs}>
+            <View style={[styles.formGroup, { flex: 1, marginRight: 10 }]}>
+              <Text style={styles.label}>Ciudad *</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Ciudad"
+                value={ciudad}
+                onChangeText={setCiudad}
+                placeholderTextColor="#BDC3C7"
+              />
+            </View>
+            <View style={[styles.formGroup, { flex: 1 }]}>
+              <Text style={styles.label}>Provincia</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="Provincia"
+                value={provincia}
+                onChangeText={setProvincia}
+                placeholderTextColor="#BDC3C7"
+              />
+            </View>
+          </View>
+
+          <View style={styles.formGroup}>
+            <Text style={styles.label}>Código Postal</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Código Postal"
+              value={codigoPostal}
+              onChangeText={setCodigoPostal}
+              placeholderTextColor="#BDC3C7"
+            />
+          </View>
+
+          {/* Terms & Conditions */}
+          <View style={styles.termsContainer}>
+            <TouchableOpacity
+              style={styles.checkboxRow}
+              onPress={() => setAcceptTerms(!acceptTerms)}
+            >
+              <View style={[styles.checkbox, acceptTerms && styles.checkboxChecked]}>
+                {acceptTerms && (
+                  <FontAwesome5 name="check" size={12} color="white" />
+                )}
+              </View>
+              <View style={styles.termsText}>
+                <Text style={styles.termsLabel}>
+                  Acepto los{' '}
+                  <Text
+                    style={styles.termsLink}
+                    onPress={() => router.push('terminos-condiciones' as any)}
+                  >
+                    Términos y Condiciones
+                  </Text>
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        {/* Buttons */}
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.buttonSecondary}
+            onPress={() => router.back()}
+          >
+            <Text style={styles.buttonSecondaryText}>Atrás</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttonPrimary}
+            onPress={handleContinuar}
+          >
+            <Text style={styles.buttonPrimaryText}>Continuar</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.spacing} />
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F8F9FA',
+    paddingHorizontal: 20,
+    paddingTop: 20,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+    marginTop: 20,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#2C3E50',
+  },
+  progressContainer: {
+    height: 4,
+    backgroundColor: '#E0E0E0',
+    borderRadius: 2,
+    overflow: 'hidden',
+    marginBottom: 10,
+  },
+  progressBar: {
+    height: '100%',
+    backgroundColor: '#4ECDC4',
+  },
+  stepText: {
+    fontSize: 12,
+    color: '#7F8C8D',
+    marginBottom: 20,
+  },
+  form: {
+    gap: 16,
+  },
+  formGroup: {
+    marginBottom: 0,
+  },
+  label: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#2C3E50',
+    marginBottom: 8,
+  },
+  input: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    fontSize: 14,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    color: '#2C3E50',
+  },
+  rowInputs: {
+    flexDirection: 'row',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    gap: 12,
+    marginTop: 30,
+    marginBottom: 20,
+  },
+  buttonSecondary: {
+    flex: 1,
+    borderRadius: 8,
+    paddingVertical: 12,
+    borderWidth: 2,
+    borderColor: '#4ECDC4',
+  },
+  buttonSecondaryText: {
+    textAlign: 'center',
+    color: '#4ECDC4',
+    fontWeight: '600',
+    fontSize: 14,
+  },
+  buttonPrimary: {
+    flex: 1,
+    backgroundColor: '#4ECDC4',
+    borderRadius: 8,
+    paddingVertical: 12,
+  },
+  buttonPrimaryText: {
+    textAlign: 'center',
+    color: 'white',
+    fontWeight: '600',
+    fontSize: 14,
+  },
+  spacing: {
+    height: 40,
+  },
+  termsContainer: {
+    marginTop: 20,
+    paddingTop: 20,
+    borderTopWidth: 1,
+    borderTopColor: '#E0E0E0',
+  },
+  checkboxRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 12,
+  },
+  checkbox: {
+    width: 20,
+    height: 20,
+    borderRadius: 4,
+    borderWidth: 2,
+    borderColor: '#4ECDC4',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 2,
+  },
+  checkboxChecked: {
+    backgroundColor: '#4ECDC4',
+  },
+  termsText: {
+    flex: 1,
+  },
+  termsLabel: {
+    fontSize: 13,
+    color: '#2C3E50',
+    lineHeight: 18,
+  },
+  termsLink: {
+    color: '#4ECDC4',
+    fontWeight: '600',
+    textDecorationLine: 'underline',
+  },
+});

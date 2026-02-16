@@ -1,0 +1,94 @@
+:root {
+	--bg: #ffffff;
+	--text: #111111;
+	--primary: #0069ff;
+	--sidebar-width: 280px;
+}
+
+/* Dark theme variables */
+body.dark-mode {
+	--bg: #0f1113;
+	--text: #e6eef8;
+	--primary: #4da3ff;
+}
+
+/* Base */
+body {
+	background: var(--bg);
+	color: var(--text);
+}
+
+/* Sidebar shared */
+.sidebar {
+	position: fixed;
+	top: 0;
+	height: 100%;
+	width: var(--sidebar-width);
+	transition: transform 0.28s ease, background-color 0.2s ease;
+	z-index: 1000;
+	background-color: var(--bg);
+	color: var(--text);
+	box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+	will-change: transform;
+	/* When closed, don't block pointer events */
+	pointer-events: none;
+}
+
+/* Sidebar on the left */
+.sidebar.left {
+	left: 0;
+	right: auto;
+	transform: translateX(-100%);
+	transform-origin: left;
+}
+
+/* Sidebar on the right */
+.sidebar.right {
+	right: 0;
+	left: auto;
+	transform: translateX(100%);
+	transform-origin: right;
+}
+
+/* Visible state (same for both sides) */
+.sidebar.open {
+	transform: translateX(0);
+	pointer-events: auto; /* allow interaction when open */
+	/* use solid background based on theme variables to avoid translucent overlay that hides content */
+	background-color: var(--bg);
+}
+
+/* ensure dark-mode sidebar uses the dark variables set on body */
+body.dark-mode .sidebar,
+body.dark-mode .sidebar.open {
+	background-color: var(--bg);
+	color: var(--text);
+}
+
+/* Hamburger button placement - matches sidebar side */
+.hamburger {
+	position: fixed;
+	top: 1rem;
+	z-index: 1100;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+}
+
+/* When hamburger is on the right */
+.hamburger.right {
+	right: 1rem;
+	left: auto;
+}
+
+/* When hamburger is on the left (if needed) */
+.hamburger.left {
+	left: 1rem;
+	right: auto;
+}
+
+/* Remove/avoid any full-screen overlay added by dark-mode that blocks clicks */
+body.dark-mode::before {
+	content: none;
+	pointer-events: none;
+}
